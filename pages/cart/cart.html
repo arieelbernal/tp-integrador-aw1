@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carrito de Compras - Tienda de E-Commerce</title>
+  <link rel="stylesheet" href="../../styles/styles.css">
+</head>
+<body>
+  <header id="main-header">
+  </header>
+
+  <main>
+    <h1 class="page-title">Carrito de Compras</h1>
+    
+    <div class="cart-container">
+      <div id="cart-items" class="cart-items">
+      </div>
+      
+      <div class="cart-summary">
+        <h2>Resumen del Pedido</h2>
+        <div class="summary-row">
+          <span>Subtotal:</span>
+          <span id="subtotal">$0.00</span>
+        </div>
+        <div class="summary-row">
+          <span>Envío:</span>
+          <span id="shipping">$0.00</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total:</span>
+          <span id="total">$0.00</span>
+        </div>
+        <button id="checkout-btn" class="checkout-btn">Proceder al Pago</button>
+        <a href="../home/home.html" class="continue-shopping">Continuar Comprando</a>
+      </div>
+    </div>
+  </main>
+
+  <footer id="main-footer">
+  </footer>
+
+  <script type="module" src="cart.js"></script>
+</body>
+</html>

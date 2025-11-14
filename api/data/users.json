@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Juan Pérez",
+    "email": "juan@example.com",
+    "password": "123456",
+    "phone": "123-456-7890",
+    "address": "Calle Principal 123"
+  },
+  {
+    "id": 2,
+    "name": "María García",
+    "email": "maria@example.com",
+    "password": "password123",
+    "phone": "098-765-4321",
+    "address": "Avenida Central 456"
+  },
+  {
+    "id": 3,
+    "name": "Carlos López",
+    "email": "carlos@example.com",
+    "password": "carlos123",
+    "phone": "555-123-4567",
+    "address": "Boulevard Norte 789"
+  }
+]
