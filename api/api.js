@@ -40,9 +40,7 @@ export async function getUsers() {
 export async function validateUser(email, password) {
   try {
     const users = await getUsers();
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-    const allUsers = [...users, ...registeredUsers];
-    const user = allUsers.find(u => u.email === email && u.password === password);
+    const user = users.find(u => u.email === email && u.password === password);
 
     if (user) {
       const { password: _, ...userWithoutPassword } = user;
@@ -68,22 +66,29 @@ export async function validateUser(email, password) {
 export async function checkEmailExists(email) {
   try {
     const users = await getUsers();
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-    const allUsers = [...users, ...registeredUsers];
-    
-    return allUsers.some(u => u.email === email);
+    return users.some(u => u.email === email);
   } catch (error) {
     console.error('Error checking email:', error);
     return false;
   }
 }
 
-export function registerUser(userData) {
+export async function registerUser(userData) {
   try {
-    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
-    const newId = registeredUsers.length > 0 
-      ? Math.max(...registeredUsers.map(u => u.id)) + 1 
-      : 1000;
+    const users = await getUsers();
+    
+    const emailExists = users.some(user => user.email === userData.email);
+    if (emailExists) {
+      return {
+        success: false,
+        message: 'El correo electrónico ya está registrado'
+      };
+    }
+    
+    const newId = users.length > 0 
+      ? Math.max(...users.map(u => u.id)) + 1 
+      : 1;
+      
     const newUser = {
       id: newId,
       name: userData.name,
@@ -93,8 +98,8 @@ export function registerUser(userData) {
       address: userData.address || '',
       createdAt: new Date().toISOString()
     };
-    registeredUsers.push(newUser);
-    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+    
+    users.push(newUser);
     
     return {
       success: true,

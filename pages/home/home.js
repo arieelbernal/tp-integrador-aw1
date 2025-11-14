@@ -1,25 +1,16 @@
 import { getProducts } from '../../api/api.js';
 import { setupHeader } from '../../components/header.js';
+import { Footer } from '../../components/footer.js';
+import { ProductCard } from '../../components/product-card.js';
 
 let products = [];
-
-function renderFooter() {
-  const footer = document.getElementById('main-footer');
-  if (footer) {
-    footer.innerHTML = `
-      <div class="footer-content">
-        <p>&copy; ${new Date().getFullYear()} Tienda de E-Commerce. Todos los derechos reservados.</p>
-      </div>
-    `;
-  }
-}
 
 function renderProducts(productsToRender = products) {
   const mainContent = document.getElementById('main-content');
   
   if (productsToRender.length === 0) {
     mainContent.innerHTML = `
-      <h1 class="page-title">Productos Destacados</h1>
+      <h1 class="page-title">Productos</h1>
       <div class="container">
         <p class="no-products">No se encontraron productos.</p>
       </div>
@@ -28,54 +19,90 @@ function renderProducts(productsToRender = products) {
   }
   
   const productsHTML = `
-    <h1 class="page-title">Productos Destacados</h1>
+    <h1 class="page-title">Productos</h1>
     <div class="container" id="products-container">
-      ${productsToRender.map(product => `
-        <div class="card" data-product-id="${product.id}">
-          <div class="card-content">
-            <img src="${product.image}" alt="${product.name}" onerror="this.src='../../images/product-placeholder.png'">
-            <h3>${product.name}</h3>
-            <p class="description">${product.description}</p>
-            <div class="price">$${product.price.toFixed(2)}</div>
-            <button class="add-to-cart" data-product-id="${product.id}">
-              Agregar al carrito
-            </button>
-          </div>
-        </div>
-      `).join('')}
+      ${productsToRender.map(product => ProductCard(product)).join('')}
     </div>
   `;
   
   mainContent.innerHTML = productsHTML;
   
+  const validateAndAdjustInput = (input) => {
+    let value = parseInt(input.value) || 1;
+    if (isNaN(value) || value < 1) {
+      value = 1;
+    }
+    input.value = value;
+    return value;
+  };
+
+  document.querySelectorAll('.qty-input').forEach(input => {
+    input.addEventListener('input', (e) => {
+      if (e.target.value === '') return;
+      validateAndAdjustInput(e.target);
+    });
+
+    input.addEventListener('blur', (e) => {
+      if (e.target.value === '') {
+        e.target.value = '1';
+      } else {
+        validateAndAdjustInput(e.target);
+      }
+    });
+  });
+
+  document.querySelectorAll('.qty-btn.increase').forEach(button => {
+    button.addEventListener('click', () => {
+      const productId = button.getAttribute('data-product-id');
+      const input = document.querySelector(`.qty-input[data-product-id="${productId}"]`);
+      if (input) {
+        const current = validateAndAdjustInput(input);
+        input.value = current + 1;
+      }
+    });
+  });
+
+  document.querySelectorAll('.qty-btn.decrease').forEach(button => {
+    button.addEventListener('click', () => {
+      const productId = button.getAttribute('data-product-id');
+      const input = document.querySelector(`.qty-input[data-product-id="${productId}"]`);
+      if (input) {
+        const current = validateAndAdjustInput(input);
+        input.value = Math.max(1, current - 1);
+      }
+    });
+  });
+
   document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', (e) => {
       e.preventDefault();
       const productId = parseInt(button.getAttribute('data-product-id'));
-      addToCart(productId);
+      const input = document.querySelector(`.qty-input[data-product-id="${productId}"]`);
+      const quantity = input ? parseInt(input.value) || 1 : 1;
+      addToCart(productId, quantity);
     });
   });
 }
 
-function addToCart(productId) {
+function addToCart(productId, quantity = 1) {
   const product = products.find(p => p.id === productId);
   if (!product) return;
   
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  
   const existingItem = cart.find(item => item.id === productId);
   
   if (existingItem) {
-    existingItem.quantity += 1;
+    existingItem.quantity += quantity;
   } else {
     cart.push({
       id: product.id,
       name: product.name,
       price: product.price,
       image: product.image,
-      quantity: 1
+      quantity
     });
   }
+  
   localStorage.setItem('cart', JSON.stringify(cart));
   updateCartCount();
   showNotification(`¡${product.name} añadido al carrito!`);
@@ -110,11 +137,11 @@ function showNotification(message) {
 
 async function init() {
   setupHeader();
-  renderFooter();
+  Footer();
   const mainContent = document.getElementById('main-content');
   if (mainContent) {
     mainContent.innerHTML = `
-      <h1 class="page-title">Productos Destacados</h1>
+      <h1 class="page-title">Productos</h1>
       <div class="container">
         <p class="loading">Cargando productos...</p>
       </div>
@@ -128,7 +155,7 @@ async function init() {
   } catch (error) {
     console.error('Error al cargar los productos:', error);
     mainContent.innerHTML = `
-      <h1 class="page-title">Productos Destacados</h1>
+      <h1 class="page-title">Productos</h1>
       <div class="container">
         <p class="error">
           Error al cargar los productos. Por favor, intenta nuevamente más tarde.

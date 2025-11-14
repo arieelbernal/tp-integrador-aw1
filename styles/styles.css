@@ -12,6 +12,12 @@
   box-sizing: border-box;
 }
 
+html {
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -23,6 +29,25 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+  width: 0;
+  background: transparent;
+}
+
+body::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+@-moz-document url-prefix() {
+  html, body {
+    scrollbar-width: none;
+  }
 }
 
 .container {
@@ -79,6 +104,81 @@ body {
   margin: 0.8rem 0;
 }
 
+.card .quantity-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 1rem 0.8rem 0.5rem;
+  height: 32px;
+  position: relative;
+}
+
+.card .qty-btn {
+  width: 32px;
+  height: 100%;
+  border: 1px solid #ddd;
+  background: #f8f8f8;
+  color: #333;
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  user-select: none;
+  position: relative;
+  padding: 0;
+  margin: 0;
+}
+
+.card .qty-btn:hover {
+  background: #eee;
+  border-color: #ccc;
+}
+
+.card .qty-btn:active {
+  transform: scale(0.95);
+}
+
+.card .qty-btn.decrease {
+  border-radius: 4px 0 0 4px;
+  border-right: none;
+}
+
+.card .qty-btn.increase {
+  border-radius: 0 4px 4px 0;
+  border-left: none;
+}
+
+.card .qty-input {
+  width: 46px;
+  height: 100%;
+  text-align: center;
+  border: 1px solid #ddd;
+  border-left: none;
+  border-right: none;
+  font-size: 0.9rem;
+  -moz-appearance: textfield;
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.card .qty-input::-webkit-outer-spin-button,
+.card .qty-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.card .qty-input:focus {
+  outline: none;
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px rgba(255, 193, 7, 0.2);
+}
+
 .card .add-to-cart {
   margin: 0.8rem;
   background-color: var(--secondary-color);
@@ -89,6 +189,9 @@ body {
   cursor: pointer;
   font-weight: 600;
   transition: background-color 0.3s;
+  width: calc(100% - 1.6rem);
+  display: block;
+  text-align: center;
 }
 
 .card .add-to-cart:hover {
@@ -264,10 +367,6 @@ main {
   box-sizing: border-box;
 }
 
-main:not(.login-container):not(.signup-container) {
-  padding: 1rem;
-}
-
 footer {
   background-color: var(--secondary-color);
   color: #fff;
@@ -341,7 +440,7 @@ footer {
 main.login-container,
 main.signup-container {
   padding: 2rem;
-  margin: 2rem auto;
+  margin: 6rem auto;
   background: #fff;
   border-radius: 0.5rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);

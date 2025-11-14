@@ -5,7 +5,6 @@
     "description": "Descripción detallada del producto 1. Excelente calidad y durabilidad.",
     "image": "../../images/producto1.jpg",
     "price": 99.99,
-    "category": "categoria1",
     "stock": 10
   },
   {
@@ -14,7 +13,6 @@
     "description": "Descripción detallada del producto 2. Ideal para uso diario.",
     "image": "../../images/producto2.jpg",
     "price": 149.99,
-    "category": "categoria2",
     "stock": 15
   },
   {
@@ -23,7 +21,6 @@
     "description": "Descripción detallada del producto 3. Diseño moderno y elegante.",
     "image": "../../images/producto3.jpg",
     "price": 199.99,
-    "category": "categoria1",
     "stock": 8
   },
   {
@@ -32,7 +29,6 @@
     "description": "Descripción detallada del producto 4. Alta tecnología.",
     "image": "../../images/producto4.jpg",
     "price": 249.99,
-    "category": "categoria2",
     "stock": 12
   },
   {
@@ -41,7 +37,6 @@
     "description": "Descripción detallada del producto 5. Calidad premium.",
     "image": "../../images/producto5.jpg",
     "price": 179.99,
-    "category": "categoria3",
     "stock": 20
   },
   {
@@ -50,7 +45,22 @@
     "description": "Descripción detallada del producto 6. Lo último en el mercado.",
     "image": "../../images/producto6.jpg",
     "price": 299.99,
-    "category": "categoria3",
+    "stock": 5
+  },
+  {
+    "id": 7,
+    "name": "Producto 7",
+    "description": "Descripción detallada del producto 7. Lo último en el mercado.",
+    "image": "../../images/producto7.jpg",
+    "price": 299.99,
+    "stock": 5
+  },
+  {
+    "id": 8,
+    "name": "Producto 8",
+    "description": "Descripción detallada del producto 8. Lo último en el mercado.",
+    "image": "../../images/producto8.jpg",
+    "price": 299.99,
     "stock": 5
   }
 ]

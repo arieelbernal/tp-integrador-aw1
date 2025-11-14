@@ -1,5 +1,6 @@
 import { setupHeader } from '../../components/header.js';
 import { checkEmailExists, registerUser } from '../../api/api.js';
+import { Footer } from '../../components/footer.js';
 
 function showNotification(message, isError = false) {
   const notification = document.createElement('div');
@@ -213,7 +214,6 @@ function checkAuth() {
 function init() {
   checkAuth();
   
-  Navbar();
   Footer();
   
   setupRealTimeValidation();
