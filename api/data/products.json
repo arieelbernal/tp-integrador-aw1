@@ -5,7 +5,8 @@
     "description": "Apple AirPods 4 con caja de carga USB-C",
     "image": "../../images/airpods.webp",
     "price": 99.99,
-    "stock": 10
+    "stock": 10,
+    "category": "Audifonos"
   },
   {
     "id": 2,
@@ -13,7 +14,8 @@
     "description": "Auricular Inalámbrico Bluetooth Sony Ult Wear Ult900n Color Negro",
     "image": "../../images/auriculares-sony.webp",
     "price": 149.99,
-    "stock": 15
+    "stock": 15,
+    "category": "Audifonos"
   },
   {
     "id": 3,
@@ -21,7 +23,8 @@
     "description": "Auriculares Gamer Inalámbricos Redragon Zeus Pro H510-pro Usb/bluetooth 7.1 Color Negro",
     "image": "../../images/auriculares-redragon.webp",
     "price": 199.99,
-    "stock": 8
+    "stock": 8,
+    "category": "Audifonos"
   },
   {
     "id": 4,
@@ -29,7 +32,8 @@
     "description": "Teclado Bluetooth Logitech Master Mx Keys S Retroiluminado Color del teclado Grafito",
     "image": "../../images/teclado-logitech.webp",
     "price": 249.99,
-    "stock": 12
+    "stock": 12,
+    "category": "Teclados"
   },
   {
     "id": 5,
@@ -37,7 +41,8 @@
     "description": "Teclado Gamer Redragon Shiva K512 Rgb Negro Español",
     "image": "../../images/teclado-redragon.webp",
     "price": 179.99,
-    "stock": 20
+    "stock": 20,
+    "category": "Teclados"
   },
   {
     "id": 6,
@@ -45,7 +50,8 @@
     "description": "Teclado compacto inlambrico multidispositivo Bluetooth HP 350 negro",
     "image": "../../images/teclado-hp.webp",
     "price": 299.99,
-    "stock": 5
+    "stock": 5,
+    "category": "Teclados"
   },
   {
     "id": 7,
@@ -53,7 +59,8 @@
     "description": "Mouse gamer de juego recargable LogitechG Series Lightspeed Hero G703 negro",
     "image": "../../images/mouse-logi.webp",
     "price": 299.99,
-    "stock": 5
+    "stock": 5,
+    "category": "Mouses"
   },
   {
     "id": 8,
@@ -61,6 +68,7 @@
     "description": "Mouse Inalámbrico Genius Nx-7000 Color Negro",
     "image": "../../images/mouse-genius.webp",
     "price": 299.99,
-    "stock": 5
+    "stock": 5,
+    "category": "Mouses"
   }
 ]

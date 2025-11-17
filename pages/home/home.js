@@ -2,30 +2,56 @@ import { getProducts } from '../../api/api.js';
 import { setupHeader } from '../../components/header.js';
 import { Footer } from '../../components/footer.js';
 import { ProductCard } from '../../components/product-card.js';
+import { CategoryFilters } from '../../components/category-filters.js';
 
 let products = [];
+let currentFilter = 'all';
 
-function renderProducts(productsToRender = products) {
+function renderProducts(productsToRender = products, category = currentFilter) {
   const mainContent = document.getElementById('main-content');
   
-  if (productsToRender.length === 0) {
-    mainContent.innerHTML = `
-      <h1 class="page-title">Productos</h1>
-      <div class="container">
-        <p class="no-products">No se encontraron productos.</p>
-      </div>
-    `;
-    return;
+  if (!Array.isArray(productsToRender)) {
+    console.error('productsToRender no es un array:', productsToRender);
+    productsToRender = [];
+  }
+
+  let filteredProducts = [...productsToRender];
+  if (category && category.toLowerCase() !== 'all') {
+    filteredProducts = productsToRender.filter(product => 
+      product && 
+      product.category && 
+      product.category.toLowerCase() === category.toLowerCase()
+    );
   }
   
-  const productsHTML = `
+  mainContent.innerHTML = `
     <h1 class="page-title">Productos</h1>
+    <div id="filters-container" class="filters-container"></div>
     <div class="container" id="products-container">
-      ${productsToRender.map(product => ProductCard(product)).join('')}
+      ${filteredProducts.length === 0 ? 
+        '<p class="no-products">No se encontraron productos en esta categoría.</p>' : 
+        filteredProducts.map(product => ProductCard(product)).join('')}
     </div>
   `;
   
-  mainContent.innerHTML = productsHTML;
+  const filtersContainer = document.getElementById('filters-container');
+  if (filtersContainer) {
+    const categories = [...new Set(productsToRender
+      .map(p => p?.category)
+      .filter(Boolean)
+    )];
+    
+    const filters = CategoryFilters({
+      categories,
+      currentFilter: category,
+      onFilterChange: (selectedCategory) => {
+        currentFilter = selectedCategory;
+        renderProducts(products, selectedCategory);
+      }
+    });
+    
+    filtersContainer.appendChild(filters);
+  }
   
   const validateAndAdjustInput = (input) => {
     let value = parseInt(input.value) || 1;

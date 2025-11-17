@@ -608,6 +608,49 @@ body {
   text-decoration: underline;
 }
 
+.category-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0;
+  padding: 0 20px;
+  justify-content: center;
+}
+
+.filter-btn {
+  padding: 8px 16px;
+  border: 2px solid var(--tertiary-color);
+  background-color: white;
+  color: var(--tertiary-color);
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+  background-color: rgba(33, 150, 243, 0.1);
+}
+
+.filter-btn.active {
+  background-color: var(--tertiary-color) !important;
+  color: white !important;
+  border-color: var(--tertiary-color) !important;
+}
+
+@media (max-width: 768px) {
+  .category-filters {
+    padding: 0 10px;
+    gap: 8px;
+  }
+  
+  .filter-btn {
+    padding: 6px 12px;
+    font-size: 13px;
+  }
+}
+
 .cart-container {
   max-width: 1200px;
   margin: 0 auto;
