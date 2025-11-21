@@ -412,9 +412,10 @@ footer {
 
 .notification {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  padding: 15px 25px;
+  bottom: 0.5rem;
+  left: 0.5rem;
+  right: 0.5rem;
+  padding: 1rem 2rem;
   border-radius: 0.3rem;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   transform: translateY(100px);
@@ -423,6 +424,8 @@ footer {
   z-index: 1000;
   color: #fff;
   font-weight: bold;
+  width: auto;
+  text-align: center;
 }
 
 .notification.show {

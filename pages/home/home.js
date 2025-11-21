@@ -143,9 +143,9 @@ function updateCartCount() {
   }
 }
 
-function showNotification(message) {
+function showNotification(message, isError = false) {
   const notification = document.createElement('div');
-  notification.className = 'notification';
+  notification.className = `notification ${isError ? 'error' : 'success'}`;
   notification.textContent = message;
   document.body.appendChild(notification);
   
