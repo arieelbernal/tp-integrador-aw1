@@ -1,0 +1,16 @@
+{
+  "name": "tp-integrador-aw1",
+  "version": "1.0.0",
+  "description": "E-commerce application with Node.js backend",
+  "main": "backend/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node backend/index.js",
+    "dev": "node --watch backend/index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "dotenv": "^16.4.5",
+    "cors": "^2.8.5"
+  }
+}

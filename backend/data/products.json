@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "name": "AirPods",
+    "description": "Apple AirPods 4 with USB-C charging case",
+    "image": "../../images/airpods.webp",
+    "price": 99.99,
+    "stock": 10,
+    "category": "Headphones"
+  },
+  {
+    "id": 2,
+    "name": "Sony Headphones",
+    "description": "Sony Ult Wear Ult900n Wireless Bluetooth Headphones Black",
+    "image": "../../images/auriculares-sony.webp",
+    "price": 149.99,
+    "stock": 15,
+    "category": "Headphones"
+  },
+  {
+    "id": 3,
+    "name": "Redragon Headphones",
+    "description": "Redragon Zeus Pro H510-pro Wireless Gaming Headphones USB/Bluetooth 7.1 Black",
+    "image": "../../images/auriculares-redragon.webp",
+    "price": 199.99,
+    "stock": 8,
+    "category": "Headphones"
+  },
+  {
+    "id": 4,
+    "name": "Logitech Keyboard",
+    "description": "Logitech Master Mx Keys S Backlit Bluetooth Keyboard Graphite",
+    "image": "../../images/teclado-logitech.webp",
+    "price": 249.99,
+    "stock": 12,
+    "category": "Keyboards"
+  },
+  {
+    "id": 5,
+    "name": "Redragon Keyboard",
+    "description": "Redragon Shiva K512 RGB Gaming Keyboard Black Spanish",
+    "image": "../../images/teclado-redragon.webp",
+    "price": 179.99,
+    "stock": 20,
+    "category": "Keyboards"
+  },
+  {
+    "id": 6,
+    "name": "HP Keyboard",
+    "description": "HP 350 Compact Wireless Multi-device Bluetooth Keyboard Black",
+    "image": "../../images/teclado-hp.webp",
+    "price": 299.99,
+    "stock": 5,
+    "category": "Keyboards"
+  },
+  {
+    "id": 7,
+    "name": "Logitech Mouse",
+    "description": "LogitechG Series Lightspeed Hero G703 Rechargeable Gaming Mouse Black",
+    "image": "../../images/mouse-logi.webp",
+    "price": 299.99,
+    "stock": 5,
+    "category": "Mice"
+  },
+  {
+    "id": 8,
+    "name": "Genius Mouse",
+    "description": "Genius Nx-7000 Wireless Mouse Black",
+    "image": "../../images/mouse-genius.webp",
+    "price": 299.99,
+    "stock": 5,
+    "category": "Mice"
+  }
+]

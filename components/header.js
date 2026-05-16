@@ -4,6 +4,8 @@ const navLinks = [
 
 const cartLink = { href: '/pages/cart/cart.html', label: 'Carrito', isCart: true };
 
+const ordersLink = { href: '/pages/orders/orders.html', label: 'Mis Pedidos' };
+
 const authLinks = [
   { href: '/pages/sign-up/sign-up.html', label: 'Registrarse' },
   { href: '/pages/login/login.html', label: 'Iniciar sesión' }
@@ -32,6 +34,7 @@ export function renderHeader() {
 
   const authNavItems = isLoggedIn 
     ? `
+      <li><a href="${ordersLink.href}" class="${window.location.pathname.includes(ordersLink.href.split('/').pop()) ? 'active' : ''}">${ordersLink.label}</a></li>
       <li>
         <button id="logout-btn" class="logout-btn">Cerrar sesión</button>
       </li>

@@ -1,0 +1,40 @@
+[
+  {
+    "id": 1,
+    "userId": 1,
+    "items": [
+      {
+        "productId": 1,
+        "quantity": 1,
+        "price": 99.99
+      },
+      {
+        "productId": 2,
+        "quantity": 1,
+        "price": 149.99
+      }
+    ],
+    "total": 249.98000000000002,
+    "active": false,
+    "createdAt": "2026-05-16T20:44:35.685Z"
+  },
+  {
+    "id": 2,
+    "userId": 1,
+    "items": [
+      {
+        "productId": 8,
+        "quantity": 1,
+        "price": 299.99
+      },
+      {
+        "productId": 1,
+        "quantity": 1,
+        "price": 99.99
+      }
+    ],
+    "total": 399.98,
+    "active": false,
+    "createdAt": "2026-05-16T21:09:49.051Z"
+  }
+]

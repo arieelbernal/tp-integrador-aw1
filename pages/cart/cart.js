@@ -1,5 +1,7 @@
 import { setupHeader } from '../../components/header.js';
 
+const API_BASE_URL = 'http://localhost:3000/api';
+
 let cart = [];
 
 function loadCart() {
@@ -131,7 +133,7 @@ function showNotification(message, isError = false) {
   }, 3000);
 }
 
-function handleCheckout() {
+async function handleCheckout() {
   if (cart.length === 0) {
     showNotification('Tu carrito está vacío', true);
     return;
@@ -147,18 +149,45 @@ function handleCheckout() {
     return;
   }
   
+  const userData = JSON.parse(sessionStorage.getItem('userData'));
+  const userId = userData.id;
+  
+  const items = cart.map(item => ({
+    productId: item.id,
+    quantity: item.quantity,
+    price: item.price
+  }));
+  
+  const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+  
   showNotification('Procesando tu pedido...');
   
-  setTimeout(() => {
-    cart = [];
-    saveCart();
-    
-    showNotification('¡Pedido realizado con éxito!');
-    
-    setTimeout(() => {
-      window.location.href = '../home/home.html';
-    }, 2000);
-  }, 1500);
+  try {
+    const response = await fetch(`${API_BASE_URL}/sales`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId, items, total }),
+    });
+
+    if (response.ok) {
+      cart = [];
+      saveCart();
+      
+      showNotification('¡Pedido realizado con éxito!');
+      
+      setTimeout(() => {
+        window.location.href = '../home/home.html';
+      }, 2000);
+    } else {
+      const errorData = await response.json();
+      showNotification(errorData.error || 'Error al procesar el pedido', true);
+    }
+  } catch (error) {
+    console.error('Error during checkout:', error);
+    showNotification('Error al procesar el pedido. Intenta nuevamente.', true);
+  }
 }
 
 function init() {
@@ -168,6 +197,11 @@ function init() {
   renderCartItems();
   updateSummary();
   addEventListeners();
+  
+  const checkoutBtn = document.getElementById('checkout-btn');
+  if (checkoutBtn) {
+    checkoutBtn.addEventListener('click', handleCheckout);
+  }
 }
 
 document.addEventListener('DOMContentLoaded', init);

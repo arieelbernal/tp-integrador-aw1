@@ -1,6 +1,7 @@
 import { setupHeader } from '../../components/header.js';
 import { Footer } from '../../components/footer.js';
-import { validateUser } from '../../api/api.js';
+
+const API_BASE_URL = 'http://localhost:3000/api';
 
 function showNotification(message, isError = false) {
   const notification = document.createElement('div');
@@ -18,6 +19,38 @@ function showNotification(message, isError = false) {
       notification.remove();
     }, 300);
   }, 3000);
+}
+
+async function validateUser(email, password) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/users/login`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (response.ok) {
+      const user = await response.json();
+      return {
+        success: true,
+        user: user
+      };
+    }
+
+    const errorData = await response.json();
+    return {
+      success: false,
+      message: errorData.error || 'Invalid credentials'
+    };
+  } catch (error) {
+    console.error('Error validating user:', error);
+    return {
+      success: false,
+      message: 'Error validating user'
+    };
+  }
 }
 
 async function handleLogin(event) {

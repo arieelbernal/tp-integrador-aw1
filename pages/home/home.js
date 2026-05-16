@@ -1,8 +1,9 @@
-import { getProducts } from '../../api/api.js';
 import { setupHeader } from '../../components/header.js';
 import { Footer } from '../../components/footer.js';
 import { ProductCard } from '../../components/product-card.js';
 import { CategoryFilters } from '../../components/category-filters.js';
+
+const API_BASE_URL = 'http://localhost:3000/api';
 
 let products = [];
 let currentFilter = 'all';
@@ -159,6 +160,19 @@ function showNotification(message, isError = false) {
       notification.remove();
     }, 300);
   }, 3000);
+}
+
+async function getProducts() {
+  try {
+    const response = await fetch(`${API_BASE_URL}/products`);
+    if (!response.ok) {
+      throw new Error('Error loading products');
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    return [];
+  }
 }
 
 async function init() {

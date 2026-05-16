@@ -426,6 +426,7 @@ footer {
   font-weight: bold;
   width: auto;
   text-align: center;
+  background-color: #4caf50;
 }
 
 .notification.show {
@@ -439,6 +440,152 @@ footer {
 
 .notification.error {
   background-color: #f44336;
+}
+
+.orders-container {
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+.orders-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.order-card {
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  transition: box-shadow 0.3s;
+}
+
+.order-card:hover {
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.15);
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.order-header h3 {
+  margin: 0;
+  color: var(--primary-color);
+  font-size: 1.2rem;
+}
+
+.order-date {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.order-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5rem;
+  background: #f9f9f9;
+  border-radius: 0.3rem;
+}
+
+.item-quantity {
+  font-weight: bold;
+  color: var(--primary-color);
+}
+
+.item-name {
+  flex: 1;
+  margin: 0 1rem;
+  color: #333;
+}
+
+.item-price {
+  font-weight: bold;
+  color: var(--secondary-color);
+}
+
+.order-total {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  font-size: 1.1rem;
+}
+
+.total-amount {
+  font-weight: bold;
+  color: var(--primary-color);
+  font-size: 1.3rem;
+}
+
+.empty-orders {
+  text-align: center;
+  padding: 3rem;
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.empty-orders p {
+  margin: 0 0 1.5rem 0;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.order-actions {
+  margin-top: 1rem;
+  padding-top: 1rem;
+  border-top: 1px solid #eee;
+  text-align: right;
+}
+
+.cancel-order-btn {
+  background-color: #f44336;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+.cancel-order-btn:hover {
+  background-color: #d32f2f;
+}
+
+@media (max-width: 768px) {
+  .order-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+  
+  .order-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .item-name {
+    margin: 0;
+  }
 }
 
 main.login-container,

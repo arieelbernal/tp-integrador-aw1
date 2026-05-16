@@ -1,6 +1,7 @@
 import { setupHeader } from '../../components/header.js';
-import { checkEmailExists, registerUser } from '../../api/api.js';
 import { Footer } from '../../components/footer.js';
+
+const API_BASE_URL = 'http://localhost:3000/api';
 
 function showNotification(message, isError = false) {
   const notification = document.createElement('div');
@@ -18,6 +19,58 @@ function showNotification(message, isError = false) {
       notification.remove();
     }, 300);
   }, 3000);
+}
+
+async function checkEmailExists(email) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/users`);
+    if (!response.ok) {
+      throw new Error('Error loading users');
+    }
+    const users = await response.json();
+    return users.some(u => u.email === email);
+  } catch (error) {
+    console.error('Error checking email:', error);
+    return false;
+  }
+}
+
+async function registerUser(userData) {
+  try {
+    const response = await fetch(`${API_BASE_URL}/users`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        name: userData.name,
+        email: userData.email,
+        password: userData.password,
+        phone: userData.phone || '',
+        address: userData.address || '',
+      }),
+    });
+
+    if (response.ok) {
+      const user = await response.json();
+      return {
+        success: true,
+        user: user
+      };
+    }
+
+    const errorData = await response.json();
+    return {
+      success: false,
+      message: errorData.error || 'Error registering user'
+    };
+  } catch (error) {
+    console.error('Error registering user:', error);
+    return {
+      success: false,
+      message: 'Error registering user'
+    };
+  }
 }
 
 function validateForm(formData) {
@@ -97,7 +150,7 @@ async function handleSignup(event) {
     password: formData.password
   };
   
-  const result = registerUser(userData);
+  const result = await registerUser(userData);
   
   if (result.success) {
     showNotification('¡Registro exitoso! Redirigiendo...');
