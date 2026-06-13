@@ -32,10 +32,11 @@ async function validateUser(email, password) {
     });
 
     if (response.ok) {
-      const user = await response.json();
+      const data = await response.json();
       return {
         success: true,
-        user: user
+        user: data.user,
+        token: data.token
       };
     }
 
@@ -64,6 +65,7 @@ async function handleLogin(event) {
     if (result && result.success) {
       sessionStorage.setItem('isLoggedIn', 'true');
       sessionStorage.setItem('userData', JSON.stringify(result.user));
+      sessionStorage.setItem('token', result.token);
 
       showNotification('¡Inicio de sesión exitoso! Redirigiendo...');
       setTimeout(() => {

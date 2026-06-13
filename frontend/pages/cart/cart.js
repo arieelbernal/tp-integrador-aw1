@@ -29,7 +29,7 @@ function renderCartItems() {
   }
   
   const itemsHTML = cart.map(item => `
-    <div class="cart-item" data-product-id="${item.id}">
+    <div class="cart-item" data-product-id="${item._id}">
       <div class="item-image">
         <img src="${item.image}" alt="${item.name}" onerror="this.src='../../images/product-placeholder.png'">
       </div>
@@ -38,14 +38,14 @@ function renderCartItems() {
         <p class="item-price">$${item.price.toFixed(2)}</p>
       </div>
       <div class="item-quantity">
-        <button class="qty-btn decrease" data-product-id="${item.id}">-</button>
-        <input type="number" value="${item.quantity}" min="1" class="qty-input" data-product-id="${item.id}" readonly>
-        <button class="qty-btn increase" data-product-id="${item.id}">+</button>
+        <button class="qty-btn decrease" data-product-id="${item._id}">-</button>
+        <input type="number" value="${item.quantity}" min="1" class="qty-input" data-product-id="${item._id}" readonly>
+        <button class="qty-btn increase" data-product-id="${item._id}">+</button>
       </div>
       <div class="item-total">
         <p>$${(item.price * item.quantity).toFixed(2)}</p>
       </div>
-      <button class="remove-item" data-product-id="${item.id}">
+      <button class="remove-item" data-product-id="${item._id}">
         <span>✕</span>
       </button>
     </div>
@@ -60,28 +60,28 @@ function renderCartItems() {
 function addEventListeners() {
   document.querySelectorAll('.increase').forEach(btn => {
     btn.addEventListener('click', () => {
-      const productId = parseInt(btn.getAttribute('data-product-id'));
+      const productId = btn.getAttribute('data-product-id');
       updateQuantity(productId, 1);
     });
   });
   
   document.querySelectorAll('.decrease').forEach(btn => {
     btn.addEventListener('click', () => {
-      const productId = parseInt(btn.getAttribute('data-product-id'));
+      const productId = btn.getAttribute('data-product-id');
       updateQuantity(productId, -1);
     });
   });
   
   document.querySelectorAll('.remove-item').forEach(btn => {
     btn.addEventListener('click', () => {
-      const productId = parseInt(btn.getAttribute('data-product-id'));
+      const productId = btn.getAttribute('data-product-id');
       removeItem(productId);
     });
   });
 }
 
 function updateQuantity(productId, change) {
-  const item = cart.find(i => i.id === productId);
+  const item = cart.find(i => i._id === productId);
   if (item) {
     item.quantity += change;
     if (item.quantity <= 0) {
@@ -94,7 +94,7 @@ function updateQuantity(productId, change) {
 }
 
 function removeItem(productId) {
-  cart = cart.filter(item => item.id !== productId);
+  cart = cart.filter(item => item._id !== productId);
   saveCart();
   renderCartItems();
   showNotification('Producto eliminado del carrito');
@@ -149,11 +149,17 @@ async function handleCheckout() {
     return;
   }
   
-  const userData = JSON.parse(sessionStorage.getItem('userData'));
-  const userId = userData.id;
+  const token = sessionStorage.getItem('token');
+  if (!token) {
+    showNotification('Sesión expirada. Inicia sesión nuevamente', true);
+    setTimeout(() => {
+      window.location.href = '../login/login.html';
+    }, 2000);
+    return;
+  }
   
   const items = cart.map(item => ({
-    productId: item.id,
+    productId: item._id,
     quantity: item.quantity,
     price: item.price
   }));
@@ -167,8 +173,9 @@ async function handleCheckout() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
       },
-      body: JSON.stringify({ userId, items, total }),
+      body: JSON.stringify({ items, total }),
     });
 
     if (response.ok) {

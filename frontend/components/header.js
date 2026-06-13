@@ -81,6 +81,7 @@ function setupLogoutButton() {
   logoutBtn.addEventListener('click', () => {
     sessionStorage.removeItem('isLoggedIn');
     sessionStorage.removeItem('userData');
+    sessionStorage.removeItem('token');
     localStorage.removeItem('cart');
     window.location.href = '/pages/login/login.html';
   });

@@ -103,7 +103,7 @@ function renderProducts(productsToRender = products, category = currentFilter) {
   document.querySelectorAll('.add-to-cart').forEach(button => {
     button.addEventListener('click', (e) => {
       e.preventDefault();
-      const productId = parseInt(button.getAttribute('data-product-id'));
+      const productId = button.getAttribute('data-product-id');
       const input = document.querySelector(`.qty-input[data-product-id="${productId}"]`);
       const quantity = input ? parseInt(input.value) || 1 : 1;
       addToCart(productId, quantity);
@@ -112,17 +112,17 @@ function renderProducts(productsToRender = products, category = currentFilter) {
 }
 
 function addToCart(productId, quantity = 1) {
-  const product = products.find(p => p.id === productId);
+  const product = products.find(p => p._id === productId);
   if (!product) return;
   
   let cart = JSON.parse(localStorage.getItem('cart')) || [];
-  const existingItem = cart.find(item => item.id === productId);
+  const existingItem = cart.find(item => item._id === productId);
   
   if (existingItem) {
     existingItem.quantity += quantity;
   } else {
     cart.push({
-      id: product.id,
+      _id: product._id,
       name: product.name,
       price: product.price,
       image: product.image,
