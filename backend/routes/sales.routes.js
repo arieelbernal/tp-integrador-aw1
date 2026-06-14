@@ -62,7 +62,6 @@ router.post('/', authenticateToken, async (req, res) => {
 
   await newSale.save();
 
-  // Update product stock
   for (const item of items) {
     await Product.findByIdAndUpdate(
       item.productId,
@@ -81,7 +80,6 @@ router.delete('/:id', authenticateToken, async (req, res) => {
     return res.status(403).json({ error: 'You can only cancel your own orders' });
   }
 
-  // Restore stock
   for (const item of sale.items) {
     await Product.findByIdAndUpdate(
       item.productId,
@@ -89,7 +87,6 @@ router.delete('/:id', authenticateToken, async (req, res) => {
     );
   }
 
-  // Set active to false instead of deleting
   sale.active = false;
   await sale.save();
 

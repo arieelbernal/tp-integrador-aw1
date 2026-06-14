@@ -6,8 +6,7 @@
   "type": "module",
   "scripts": {
     "start": "node backend/index.js",
-    "dev": "node --watch backend/index.js",
-    "migrate": "node backend/scripts/migrate.js"
+    "dev": "node --watch backend/index.js"
   },
   "dependencies": {
     "express": "^4.19.2",

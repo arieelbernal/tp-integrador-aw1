@@ -17,10 +17,8 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Connect to MongoDB
 connectDB();
 
-// Serve static files from frontend
 app.use(express.static(path.join(__dirname, '../frontend')));
 
 app.get('/', (req, res) => {
