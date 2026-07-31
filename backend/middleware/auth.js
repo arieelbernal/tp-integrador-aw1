@@ -1,21 +1,22 @@
 import jwt from 'jsonwebtoken';
+import { HttpError } from '../utils/httpError.js';
 
 export function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
   const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) {
-    return res.status(401).json({ error: 'Access token required' });
+    return next(new HttpError(401, 'Token de acceso requerido'));
   }
 
   const jwtSecret = process.env.JWT_SECRET;
   if (!jwtSecret) {
-    return res.status(500).json({ error: 'JWT_SECRET environment variable is not configured' });
+    return next(new HttpError(500, 'JWT_SECRET environment variable is not configured'));
   }
 
   jwt.verify(token, jwtSecret, (err, user) => {
     if (err) {
-      return res.status(403).json({ error: 'Invalid or expired token' });
+      return next(new HttpError(401, 'Token inválido o expirado'));
     }
     req.user = user;
     next();

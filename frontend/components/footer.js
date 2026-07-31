@@ -3,8 +3,9 @@ export function Footer() {
   if (!footer) return;
   
   const currentYear = new Date().getFullYear();
-  
+
+  footer.className = 'footer-shop text-white text-center py-3';
   footer.innerHTML = `
-    <p>&copy; ${currentYear} Tienda de E-Commerce. Todos los derechos reservados.</p>
+    <p class="mb-0">&copy; ${currentYear} Tienda de E-Commerce. Todos los derechos reservados.</p>
   `;
 }

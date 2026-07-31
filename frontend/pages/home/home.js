@@ -26,12 +26,14 @@ function renderProducts(productsToRender = products, category = currentFilter) {
   }
   
   mainContent.innerHTML = `
-    <h1 class="page-title">Productos</h1>
-    <div id="filters-container" class="filters-container"></div>
-    <div class="container" id="products-container">
-      ${filteredProducts.length === 0 ? 
-        '<p class="no-products">No se encontraron productos en esta categoría.</p>' : 
-        filteredProducts.map(product => ProductCard(product)).join('')}
+    <div class="container">
+      <h1 class="page-title">Productos</h1>
+      <div id="filters-container" class="filters-container"></div>
+      <div class="row" id="products-container">
+        ${filteredProducts.length === 0 ?
+          '<p class="no-products text-center">No se encontraron productos en esta categoría.</p>' :
+          filteredProducts.map(product => ProductCard(product)).join('')}
+      </div>
     </div>
   `;
   
@@ -181,13 +183,18 @@ async function init() {
   const mainContent = document.getElementById('main-content');
   if (mainContent) {
     mainContent.innerHTML = `
-      <h1 class="page-title">Productos</h1>
       <div class="container">
-        <p class="loading">Cargando productos...</p>
+        <h1 class="page-title">Productos</h1>
+        <div class="loading text-center py-5">
+          <div class="spinner-border text-primary-brand" role="status">
+            <span class="visually-hidden">Cargando...</span>
+          </div>
+          <p class="mt-3">Cargando productos...</p>
+        </div>
       </div>
     `;
   }
-  
+
   try {
     products = await getProducts();
     renderProducts(products);
@@ -195,9 +202,9 @@ async function init() {
   } catch (error) {
     console.error('Error al cargar los productos:', error);
     mainContent.innerHTML = `
-      <h1 class="page-title">Productos</h1>
       <div class="container">
-        <p class="error">
+        <h1 class="page-title">Productos</h1>
+        <p class="alert alert-danger text-center">
           Error al cargar los productos. Por favor, intenta nuevamente más tarde.
         </p>
       </div>

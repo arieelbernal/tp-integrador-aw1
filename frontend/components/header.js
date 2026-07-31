@@ -16,44 +16,49 @@ export function renderHeader() {
   if (!header) return;
 
   const isLoggedIn = sessionStorage.getItem('isLoggedIn') === 'true';
-  
+
   const navItems = navLinks.map(link => {
     const isActive = window.location.pathname.includes(link.href.split('/').pop());
     return `
-      <li><a href="${link.href}" class="${isActive ? 'active' : ''}">${link.label}</a></li>
+      <li class="nav-item"><a href="${link.href}" class="nav-link${isActive ? ' active' : ''}">${link.label}</a></li>
     `;
   }).join('');
 
   const cartItem = `
-    <li>
-      <a href="${cartLink.href}" class="cart-icon ${window.location.pathname.includes(cartLink.href.split('/').pop()) ? 'active' : ''}">
-        🛒 <span id="cart-count">0</span>
+    <li class="nav-item">
+      <a href="${cartLink.href}" class="nav-link cart-icon${window.location.pathname.includes(cartLink.href.split('/').pop()) ? ' active' : ''}">
+        🛒 <span id="cart-count" class="badge rounded-pill bg-danger">0</span>
       </a>
     </li>
   `;
 
-  const authNavItems = isLoggedIn 
+  const authNavItems = isLoggedIn
     ? `
-      <li><a href="${ordersLink.href}" class="${window.location.pathname.includes(ordersLink.href.split('/').pop()) ? 'active' : ''}">${ordersLink.label}</a></li>
-      <li>
-        <button id="logout-btn" class="logout-btn">Cerrar sesión</button>
+      <li class="nav-item"><a href="${ordersLink.href}" class="nav-link${window.location.pathname.includes(ordersLink.href.split('/').pop()) ? ' active' : ''}">${ordersLink.label}</a></li>
+      <li class="nav-item">
+        <button id="logout-btn" class="btn btn-outline-light btn-sm ms-lg-2">Cerrar sesión</button>
       </li>
     `
     : authLinks.map(link => `
-      <li><a href="${link.href}" class="${window.location.pathname.includes(link.href.split('/').pop()) ? 'active' : ''}">${link.label}</a></li>
+      <li class="nav-item"><a href="${link.href}" class="nav-link${window.location.pathname.includes(link.href.split('/').pop()) ? ' active' : ''}">${link.label}</a></li>
     `).join('');
 
   header.innerHTML = `
-    <div class="nav-container">
-      <h1>Tienda de E-Commerce</h1>
-      <nav>
-        <ul>
-          ${navItems}
-          ${authNavItems}
-          ${cartItem}
-        </ul>
-      </nav>
-    </div>
+    <nav class="navbar navbar-expand-lg navbar-dark navbar-shop fixed-top shadow-sm">
+      <div class="container">
+        <a class="navbar-brand fw-semibold" href="/pages/home/home.html">Tienda de E-Commerce</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-1">
+            ${navItems}
+            ${authNavItems}
+            ${cartItem}
+          </ul>
+        </div>
+      </div>
+    </nav>
   `;
 
   updateCartCount();

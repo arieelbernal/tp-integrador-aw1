@@ -70,14 +70,13 @@ async function cancelOrder(orderId) {
 
     if (response.ok) {
       showNotification('Pedido cancelado exitosamente');
-      // Reload orders
       const userData = JSON.parse(sessionStorage.getItem('userData'));
       const orders = await getOrdersByUserId(userData._id);
       const products = await getProducts();
       renderOrders(orders, products);
     } else {
       const errorData = await response.json();
-      showNotification(errorData.error || 'Error al cancelar el pedido', true);
+      showNotification(errorData.message || 'Error al cancelar el pedido', true);
     }
   } catch (error) {
     console.error('Error cancelling order:', error);
@@ -90,19 +89,19 @@ function renderOrders(orders, products) {
   
   if (!orders || orders.length === 0) {
     ordersList.innerHTML = `
-      <div class="empty-orders">
-        <p>No tienes pedidos aún</p>
-        <a href="../home/home.html" class="btn-primary">Ir a Comprar</a>
+      <div class="empty-orders card text-center py-5 shadow-sm">
+        <p class="fs-5">No tienes pedidos aún</p>
+        <a href="../home/home.html" class="btn btn-brand-secondary mx-auto">Ir a Comprar</a>
       </div>
     `;
     return;
   }
-  
+
   const ordersHTML = orders.map(order => `
-    <div class="order-card">
-      <div class="order-header">
-        <h3>Pedido #${order._id}</h3>
-        <p class="order-date">${new Date(order.createdAt).toLocaleDateString('es-ES', {
+    <div class="order-card card shadow-sm p-3">
+      <div class="order-header d-flex justify-content-between align-items-center border-bottom pb-3 mb-3">
+        <h3 class="h5 mb-0 text-primary-brand">Pedido #${order._id}</h3>
+        <p class="order-date mb-0 text-muted">${new Date(order.createdAt).toLocaleDateString('es-ES', {
           year: 'numeric',
           month: 'long',
           day: 'numeric',
@@ -110,32 +109,31 @@ function renderOrders(orders, products) {
           minute: '2-digit'
         })}</p>
       </div>
-      <div class="order-items">
+      <div class="order-items d-flex flex-column gap-2 mb-3">
         ${order.items.map(item => {
           const product = products.find(p => p._id === item.productId);
           const productName = product ? product.name : `Producto ID: ${item.productId}`;
           return `
-            <div class="order-item">
-              <span class="item-quantity">x${item.quantity}</span>
-              <span class="item-name">${productName}</span>
-              <span class="item-price">$${item.price.toFixed(2)}</span>
+            <div class="order-item d-flex justify-content-between align-items-center p-2 bg-light rounded">
+              <span class="item-quantity fw-bold text-primary-brand">x${item.quantity}</span>
+              <span class="item-name flex-grow-1 mx-3">${productName}</span>
+              <span class="item-price fw-bold">$${item.price.toFixed(2)}</span>
             </div>
           `;
         }).join('')}
       </div>
-      <div class="order-total">
+      <div class="order-total d-flex justify-content-between align-items-center fs-5 border-top pt-3">
         <span>Total:</span>
-        <span class="total-amount">$${order.total.toFixed(2)}</span>
+        <span class="total-amount fw-bold text-primary-brand fs-4">$${order.total.toFixed(2)}</span>
       </div>
-      <div class="order-actions">
-        <button class="cancel-order-btn" data-order-id="${order._id}">Cancelar Pedido</button>
+      <div class="order-actions text-end border-top pt-3 mt-3">
+        <button class="btn btn-outline-danger cancel-order-btn" data-order-id="${order._id}">Cancelar Pedido</button>
       </div>
     </div>
   `).join('');
-  
+
   ordersList.innerHTML = ordersHTML;
   
-  // Add event listeners to cancel buttons
   document.querySelectorAll('.cancel-order-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       const orderId = btn.getAttribute('data-order-id');
@@ -171,8 +169,15 @@ async function init() {
   const userId = userData._id;
   
   const ordersList = document.getElementById('orders-list');
-  ordersList.innerHTML = '<p class="loading">Cargando pedidos...</p>';
-  
+  ordersList.innerHTML = `
+    <div class="loading text-center py-5">
+      <div class="spinner-border text-primary-brand" role="status">
+        <span class="visually-hidden">Cargando...</span>
+      </div>
+      <p class="mt-3">Cargando pedidos...</p>
+    </div>
+  `;
+
   try {
     const [orders, products] = await Promise.all([
       getOrdersByUserId(userId),
@@ -182,9 +187,7 @@ async function init() {
   } catch (error) {
     console.error('Error loading orders:', error);
     ordersList.innerHTML = `
-      <div class="error">
-        <p>Error al cargar los pedidos. Por favor, intenta nuevamente más tarde.</p>
-      </div>
+      <p class="alert alert-danger text-center">Error al cargar los pedidos. Por favor, intenta nuevamente más tarde.</p>
     `;
   }
 }

@@ -62,13 +62,13 @@ async function registerUser(userData) {
     const errorData = await response.json();
     return {
       success: false,
-      message: errorData.error || 'Error registering user'
+      message: errorData.message || 'Error al registrar el usuario'
     };
   } catch (error) {
     console.error('Error registering user:', error);
     return {
       success: false,
-      message: 'Error registering user'
+      message: 'Error al registrar el usuario'
     };
   }
 }

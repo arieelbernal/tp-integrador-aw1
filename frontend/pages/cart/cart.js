@@ -19,38 +19,42 @@ function renderCartItems() {
   
   if (cart.length === 0) {
     cartItemsContainer.innerHTML = `
-      <div class="empty-cart">
-        <p>Tu carrito está vacío</p>
-        <a href="../home/home.html" class="btn-primary">Ir a Comprar</a>
+      <div class="empty-cart text-center py-5">
+        <p class="fs-5">Tu carrito está vacío</p>
+        <a href="../home/home.html" class="btn btn-brand-secondary">Ir a Comprar</a>
       </div>
     `;
     updateSummary();
     return;
   }
-  
+
   const itemsHTML = cart.map(item => `
-    <div class="cart-item" data-product-id="${item._id}">
-      <div class="item-image">
-        <img src="${item.image}" alt="${item.name}" onerror="this.src='../../images/product-placeholder.png'">
+    <div class="cart-item row gx-3 gy-2 align-items-center py-3 border-bottom" data-product-id="${item._id}">
+      <div class="item-image col-4 col-sm-2">
+        <img src="${item.image}" class="img-fluid rounded" alt="${item.name}" onerror="this.src='../../images/product-placeholder.png'">
       </div>
-      <div class="item-details">
-        <h3>${item.name}</h3>
-        <p class="item-price">$${item.price.toFixed(2)}</p>
+      <div class="item-details col-8 col-sm-4">
+        <h3 class="h6 mb-1">${item.name}</h3>
+        <p class="item-price mb-0">$${item.price.toFixed(2)}</p>
       </div>
-      <div class="item-quantity">
-        <button class="qty-btn decrease" data-product-id="${item._id}">-</button>
-        <input type="number" value="${item.quantity}" min="1" class="qty-input" data-product-id="${item._id}" readonly>
-        <button class="qty-btn increase" data-product-id="${item._id}">+</button>
+      <div class="item-quantity col-6 col-sm-3">
+        <div class="input-group input-group-sm">
+          <button class="btn btn-outline-secondary qty-btn decrease" type="button" data-product-id="${item._id}">-</button>
+          <input type="number" value="${item.quantity}" min="1" class="form-control text-center qty-input" data-product-id="${item._id}" readonly>
+          <button class="btn btn-outline-secondary qty-btn increase" type="button" data-product-id="${item._id}">+</button>
+        </div>
       </div>
-      <div class="item-total">
-        <p>$${(item.price * item.quantity).toFixed(2)}</p>
+      <div class="item-total col-4 col-sm-2 text-sm-end fw-bold">
+        <p class="mb-0">$${(item.price * item.quantity).toFixed(2)}</p>
       </div>
-      <button class="remove-item" data-product-id="${item._id}">
-        <span>✕</span>
-      </button>
+      <div class="col-2 col-sm-1 text-end">
+        <button class="btn btn-sm btn-danger rounded-circle remove-item" data-product-id="${item._id}">
+          <span>✕</span>
+        </button>
+      </div>
     </div>
   `).join('');
-  
+
   cartItemsContainer.innerHTML = itemsHTML;
   
   addEventListeners();
@@ -189,7 +193,7 @@ async function handleCheckout() {
       }, 2000);
     } else {
       const errorData = await response.json();
-      showNotification(errorData.error || 'Error al procesar el pedido', true);
+      showNotification(errorData.message || 'Error al procesar el pedido', true);
     }
   } catch (error) {
     console.error('Error during checkout:', error);

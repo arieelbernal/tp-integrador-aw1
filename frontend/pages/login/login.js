@@ -43,13 +43,13 @@ async function validateUser(email, password) {
     const errorData = await response.json();
     return {
       success: false,
-      message: errorData.error || 'Invalid credentials'
+      message: errorData.message || 'Credenciales inválidas'
     };
   } catch (error) {
     console.error('Error validating user:', error);
     return {
       success: false,
-      message: 'Error validating user'
+      message: 'Error al validar el usuario'
     };
   }
 }
