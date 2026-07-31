@@ -3,7 +3,7 @@ import { Footer } from '../../components/footer.js';
 import { ProductCard } from '../../components/product-card.js';
 import { CategoryFilters } from '../../components/category-filters.js';
 
-const API_BASE_URL = 'http://localhost:3000/api';
+const API_BASE_URL = '/api';
 
 let products = [];
 let currentFilter = 'all';
